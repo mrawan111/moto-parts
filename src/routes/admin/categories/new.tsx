@@ -1,0 +1,1 @@
+import{createFileRoute}from"@tanstack/react-router";import{CategoryForm}from"@/components/admin/CategoryForm";export const Route=createFileRoute("/admin/_layout/categories/new")({component:()=> <><h1 className="mb-6 text-2xl font-black">إضافة تصنيف</h1><CategoryForm/></>});

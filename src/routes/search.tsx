@@ -1,0 +1,2 @@
+import { createFileRoute } from "@tanstack/react-router"; import { z } from "zod"; import { SiteLayout } from "@/components/site/SiteLayout"; import { ProductBrowser } from "@/components/catalog/ProductBrowser";
+export const Route=createFileRoute("/search")({validateSearch:z.object({q:z.string().optional()}),component:Search}); function Search(){const {q}=Route.useSearch();return <SiteLayout><ProductBrowser title="نتائج البحث" query={q}/></SiteLayout>}
