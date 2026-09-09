@@ -168,6 +168,30 @@ export type Database = {
         }
         Relationships: []
       }
+      store_settings: {
+        Row: {
+          business_name: string
+          id: number
+          map_url: string
+          updated_at: string
+          whatsapp_number: string
+        }
+        Insert: {
+          business_name?: string
+          id?: number
+          map_url?: string
+          updated_at?: string
+          whatsapp_number?: string
+        }
+        Update: {
+          business_name?: string
+          id?: number
+          map_url?: string
+          updated_at?: string
+          whatsapp_number?: string
+        }
+        Relationships: []
+      }
       user_roles: {
         Row: {
           created_at: string

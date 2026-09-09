@@ -6,9 +6,10 @@ import { Menu, Phone, Search, X } from "lucide-react";
 
 import { Logo } from "./Logo";
 import { listCategories } from "@/lib/catalog.functions";
-import { WHATSAPP_DISPLAY, WHATSAPP_NUMBER } from "@/lib/whatsapp";
+import { useStoreSettings } from "@/hooks/use-store-settings";
 
 export function Header() {
+  const settings = useStoreSettings();
   const navigate = useNavigate();
   const fetchCategories = useServerFn(listCategories);
   const [term, setTerm] = useState("");
@@ -56,13 +57,13 @@ export function Header() {
             كل المنتجات
           </Link>
           <a
-            href={`https://wa.me/${WHATSAPP_NUMBER}`}
+            href={`https://wa.me/${settings.whatsapp_number}`}
             target="_blank"
             rel="noopener noreferrer"
             className="inline-flex items-center gap-2 rounded-lg bg-success px-3 py-2 text-success-foreground transition-opacity hover:opacity-90"
           >
             <Phone className="h-4 w-4" />
-            {WHATSAPP_DISPLAY}
+            واتساب
           </a>
         </nav>
 
@@ -111,7 +112,7 @@ export function Header() {
               </Link>
             ))}
             <a
-              href={`https://wa.me/${WHATSAPP_NUMBER}`}
+              href={`https://wa.me/${settings.whatsapp_number}`}
               target="_blank"
               rel="noopener noreferrer"
               className="mt-2 rounded-lg bg-success px-3 py-3 text-center text-success-foreground"
