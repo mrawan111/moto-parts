@@ -1,6 +1,6 @@
 import { Link, Outlet, useLocation, useNavigate } from "@tanstack/react-router";
 import { useState } from "react";
-import { Boxes, ChevronLeft, FolderTree, LayoutDashboard, LogOut, Menu, PackagePlus } from "lucide-react";
+import { Boxes, ChevronLeft, FolderTree, LayoutDashboard, LogOut, Menu, PackagePlus, Settings } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
 import { Logo } from "@/components/site/Logo";
 
@@ -8,6 +8,7 @@ const links = [
   { to: "/admin", label: "نظرة عامة", icon: LayoutDashboard },
   { to: "/admin/products", label: "المنتجات", icon: Boxes },
   { to: "/admin/categories", label: "التصنيفات", icon: FolderTree },
+  { to: "/admin/settings", label: "الإعدادات", icon: Settings },
 ] as const;
 
 function Sidebar({ onNavigate }: { onNavigate?: () => void }) {

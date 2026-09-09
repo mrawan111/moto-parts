@@ -2,8 +2,10 @@ import { Link } from "@tanstack/react-router";
 import { MessageCircle, Package } from "lucide-react";
 import type { ProductSummary } from "@/lib/catalog.functions";
 import { formatPrice, productUrl, whatsappOrderUrl } from "@/lib/whatsapp";
+import { useStoreSettings } from "@/hooks/use-store-settings";
 
 export function ProductCard({ product }: { product: ProductSummary }) {
+  const settings = useStoreSettings();
   const soldOut = product.status === "SOLD_OUT";
   const image = product.images[0]?.url;
   return <article className="group overflow-hidden rounded-2xl border border-border bg-card shadow-card transition hover:-translate-y-1 hover:shadow-lift">
@@ -16,7 +18,7 @@ export function ProductCard({ product }: { product: ProductSummary }) {
       <Link to="/products/$slug" params={{ slug: product.slug }} className="mt-2 block text-base font-black text-foreground hover:text-primary">{product.name}</Link>
       <p className="mt-1 line-clamp-2 min-h-10 text-xs leading-5 text-muted-foreground">{product.description || "قطع غيار بجودة موثوقة."}</p>
       <div className="mt-4 flex items-center justify-between gap-2"><span className="font-black text-primary">{formatPrice(product.price)}</span>
-        {soldOut ? <span className="rounded-lg bg-muted px-3 py-2 text-xs font-bold text-muted-foreground">غير متوفر</span> : <a href={whatsappOrderUrl({ name: product.name, price: product.price, url: productUrl(product.slug) })} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-1 rounded-lg bg-success px-3 py-2 text-xs font-bold text-success-foreground"><MessageCircle className="h-4 w-4" />اطلب عبر واتساب</a>}
+        {soldOut ? <span className="rounded-lg bg-muted px-3 py-2 text-xs font-bold text-muted-foreground">غير متوفر</span> : <a href={whatsappOrderUrl({ name: product.name, price: product.price, url: productUrl(product.slug), number: settings.whatsapp_number })} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-1 rounded-lg bg-success px-3 py-2 text-xs font-bold text-success-foreground"><MessageCircle className="h-4 w-4" />اطلب عبر واتساب</a>}
       </div>
     </div>
   </article>;

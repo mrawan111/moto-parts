@@ -18,6 +18,7 @@ import { Route as AdminProductEditRouteImport } from './routes/admin/products/$i
 import { Route as AdminCategoriesRouteImport } from './routes/admin/categories/index'
 import { Route as AdminCategoryNewRouteImport } from './routes/admin/categories/new'
 import { Route as AdminCategoryEditRouteImport } from './routes/admin/categories/$id'
+import { Route as AdminSettingsRouteImport } from './routes/admin/settings'
 
 const IndexRoute = IndexRouteImport.update({ id: '/', path: '/', getParentRoute: () => rootRouteImport } as any)
 const ProductsRoute = ProductsRouteImport.update({ id: '/products/', path: '/products', getParentRoute: () => rootRouteImport } as any)
@@ -33,8 +34,9 @@ const AdminProductEditRoute = AdminProductEditRouteImport.update({ id: '/product
 const AdminCategoriesRoute = AdminCategoriesRouteImport.update({ id: '/categories/', path: '/categories', getParentRoute: () => AdminLayoutRoute } as any)
 const AdminCategoryNewRoute = AdminCategoryNewRouteImport.update({ id: '/categories/new', path: '/categories/new', getParentRoute: () => AdminLayoutRoute } as any)
 const AdminCategoryEditRoute = AdminCategoryEditRouteImport.update({ id: '/categories/$id', path: '/categories/$id', getParentRoute: () => AdminLayoutRoute } as any)
+const AdminSettingsRoute = AdminSettingsRouteImport.update({ id: '/settings', path: '/settings', getParentRoute: () => AdminLayoutRoute } as any)
 
-const AdminLayoutChildren = { AdminIndexRoute, AdminProductsRoute, AdminProductNewRoute, AdminProductEditRoute, AdminCategoriesRoute, AdminCategoryNewRoute, AdminCategoryEditRoute }
+const AdminLayoutChildren = { AdminIndexRoute, AdminProductsRoute, AdminProductNewRoute, AdminProductEditRoute, AdminCategoriesRoute, AdminCategoryNewRoute, AdminCategoryEditRoute, AdminSettingsRoute }
 const AdminLayoutRouteWithChildren = AdminLayoutRoute._addFileChildren(AdminLayoutChildren)
 const rootRouteChildren = { IndexRoute, ProductsRoute, ProductRoute, SearchRoute, CategoryRoute, AdminLoginRoute, AdminLayoutRoute: AdminLayoutRouteWithChildren }
 export const routeTree = rootRouteImport._addFileChildren(rootRouteChildren)
