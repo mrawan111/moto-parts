@@ -1,1 +1,1 @@
-import {createFileRoute}from"@tanstack/react-router";import{ProductForm}from"@/components/admin/ProductForm";export const Route=createFileRoute("/admin/_layout/products/new")({component:()=> <><h1 className="mb-6 text-2xl font-black">إضافة منتج</h1><ProductForm/></>});
+import {createFileRoute}from"@tanstack/react-router";import{ProductForm}from"@/components/admin/ProductForm";export const Route=createFileRoute("/admin/products/new")({component:()=> <><h1 className="mb-6 text-2xl font-black">إضافة منتج</h1><ProductForm/></>});
