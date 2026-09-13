@@ -1,0 +1,25 @@
+import { createFileRoute, redirect } from "@tanstack/react-router";
+import { supabase } from "@/integrations/supabase/client";
+import { AdminLayout } from "@/components/admin/AdminLayout";
+
+export const Route = createFileRoute("/admin")({
+  beforeLoad: async () => {
+    const {
+      data: { user },
+    } = await supabase.auth.getUser();
+    if (!user) throw redirect({ to: "/admin/login" });
+
+    const { data } = await supabase
+      .from("user_roles")
+      .select("role")
+      .eq("user_id", user.id)
+      .eq("role", "admin")
+      .maybeSingle();
+
+    if (!data) {
+      await supabase.auth.signOut();
+      throw redirect({ to: "/admin/login" });
+    }
+  },
+  component: AdminLayout,
+});
