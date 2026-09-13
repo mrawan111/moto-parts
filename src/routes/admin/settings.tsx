@@ -7,7 +7,7 @@ import { supabase } from "@/integrations/supabase/client";
 import { defaultStoreSettings } from "@/lib/settings.functions";
 import { Button } from "@/components/ui/button";
 
-export const Route = createFileRoute("/admin/_layout/settings")({ component: Settings });
+export const Route = createFileRoute("/admin/settings")({ component: Settings });
 function Settings() {
   const queryClient = useQueryClient();
   const query = useQuery({ queryKey: ["store-settings"], queryFn: async () => { const { data, error } = await supabase.from("store_settings").select("business_name,whatsapp_number,map_url").eq("id", 1).maybeSingle(); if (error) throw error; return data ?? defaultStoreSettings; } });

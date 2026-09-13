@@ -7,7 +7,7 @@ import { EmptyState } from "@/components/site/EmptyState";
 import { Button } from "@/components/ui/button";
 import { AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle, AlertDialogTrigger } from "@/components/ui/alert-dialog";
 
-export const Route = createFileRoute("/admin/_layout/categories/")({ component: Categories });
+export const Route = createFileRoute("/admin/categories/")({ component: Categories });
 type Category = { id: string; name: string; slug: string; parent_id: string | null; product_categories: { product_id: string }[] | null };
 function Categories() {
   const queryClient = useQueryClient();
