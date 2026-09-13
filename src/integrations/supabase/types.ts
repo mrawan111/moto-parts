@@ -171,22 +171,31 @@ export type Database = {
       store_settings: {
         Row: {
           business_name: string
+          facebook_url: string
           id: number
+          instagram_url: string
           map_url: string
+          tiktok_url: string
           updated_at: string
           whatsapp_number: string
         }
         Insert: {
           business_name?: string
+          facebook_url?: string
           id?: number
+          instagram_url?: string
           map_url?: string
+          tiktok_url?: string
           updated_at?: string
           whatsapp_number?: string
         }
         Update: {
           business_name?: string
+          facebook_url?: string
           id?: number
+          instagram_url?: string
           map_url?: string
+          tiktok_url?: string
           updated_at?: string
           whatsapp_number?: string
         }

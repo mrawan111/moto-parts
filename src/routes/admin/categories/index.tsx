@@ -5,18 +5,193 @@ import { toast } from "sonner";
 import { supabase } from "@/integrations/supabase/client";
 import { EmptyState } from "@/components/site/EmptyState";
 import { Button } from "@/components/ui/button";
-import { AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle, AlertDialogTrigger } from "@/components/ui/alert-dialog";
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+  AlertDialogTrigger,
+} from "@/components/ui/alert-dialog";
 
-export const Route = createFileRoute("/admin/categories/")({ component: Categories });
-type Category = { id: string; name: string; slug: string; parent_id: string | null; product_categories: { product_id: string }[] | null };
+export const Route = createFileRoute("/admin/categories/")({
+  head: () => ({ meta: [{ title: "إدارة التصنيفات | إدارة أبو عمر" }] }),
+  component: Categories,
+});
+type Category = {
+  id: string;
+  name: string;
+  slug: string;
+  parent_id: string | null;
+  product_categories: { product_id: string }[] | null;
+};
 function Categories() {
   const queryClient = useQueryClient();
-  const query = useQuery({ queryKey: ["admin-categories"], queryFn: async () => { const { data, error } = await supabase.from("categories").select("id,name,slug,parent_id,product_categories(product_id)").order("sort_order").order("name"); if (error) throw error; return data as Category[]; } });
-  const remove = async (category: Category) => { const { error } = await supabase.from("categories").delete().eq("id", category.id); if (error) { toast.error(error.message); return; } toast.success(`تم حذف «${category.name}»`); queryClient.invalidateQueries({ queryKey: ["admin-categories"] }); };
-  const categories = query.data ?? []; const parents = categories.filter(c => !c.parent_id);
-  return <div className="space-y-6"><div className="flex flex-wrap items-end justify-between gap-4"><div><p className="text-sm font-bold text-primary">تنظيم الكتالوج</p><h2 className="mt-1 text-2xl font-black tracking-tight">التصنيفات</h2><p className="mt-1 text-sm text-muted-foreground">رتّب الماركات والموديلات في شجرة سهلة التصفح.</p></div><Button asChild><Link to="/admin/categories/new"><Plus />إضافة تصنيف</Link></Button></div>
-    <section className="overflow-hidden rounded-2xl border border-border/80 bg-card shadow-card"><div className="flex items-center justify-between border-b border-border/80 px-5 py-4"><div className="flex items-center gap-2"><FolderTree className="h-5 w-5 text-primary"/><h3 className="font-black">شجرة التصنيفات</h3></div><span className="rounded-full bg-muted px-2.5 py-1 text-xs font-bold text-muted-foreground">{categories.length} تصنيف</span></div>{query.isLoading ? <div className="space-y-3 p-5"><div className="h-12 animate-pulse rounded-xl bg-muted"/><div className="h-12 animate-pulse rounded-xl bg-muted"/></div> : !categories.length ? <div className="p-5"><EmptyState title="لا توجد تصنيفات بعد" hint="ابدأ بإضافة تصنيف رئيسي ثم أضف الموديلات تحته."/></div> : <div className="divide-y divide-border/70">{parents.map(parent => <CategoryRow key={parent.id} category={parent} depth={0} children={categories.filter(c => c.parent_id === parent.id)} onDelete={remove} />)}</div>}</section>
-  </div>;
+  const query = useQuery({
+    queryKey: ["admin-categories"],
+    queryFn: async () => {
+      const { data, error } = await supabase
+        .from("categories")
+        .select("id,name,slug,parent_id,product_categories(product_id)")
+        .order("sort_order")
+        .order("name");
+      if (error) throw error;
+      return data as Category[];
+    },
+  });
+  const remove = async (category: Category) => {
+    const { error } = await supabase.from("categories").delete().eq("id", category.id);
+    if (error) {
+      toast.error(error.message);
+      return;
+    }
+    toast.success(`تم حذف «${category.name}»`);
+    queryClient.invalidateQueries({ queryKey: ["admin-categories"] });
+  };
+  const categories = query.data ?? [];
+  const parents = categories.filter((c) => !c.parent_id);
+  return (
+    <div className="space-y-6">
+      <div className="flex flex-wrap items-end justify-between gap-4">
+        <div>
+          <p className="text-sm font-bold text-primary">تنظيم الكتالوج</p>
+          <h2 className="mt-1 text-2xl font-black tracking-tight">التصنيفات</h2>
+          <p className="mt-1 text-sm text-muted-foreground">
+            رتّب الماركات والموديلات في شجرة سهلة التصفح.
+          </p>
+        </div>
+        <Button asChild>
+          <Link to="/admin/categories/new">
+            <Plus />
+            إضافة تصنيف
+          </Link>
+        </Button>
+      </div>
+      <section className="overflow-hidden rounded-2xl border border-border/80 bg-card shadow-card">
+        <div className="flex items-center justify-between border-b border-border/80 px-5 py-4">
+          <div className="flex items-center gap-2">
+            <FolderTree className="h-5 w-5 text-primary" />
+            <h3 className="font-black">شجرة التصنيفات</h3>
+          </div>
+          <span className="rounded-full bg-muted px-2.5 py-1 text-xs font-bold text-muted-foreground">
+            {categories.length} تصنيف
+          </span>
+        </div>
+        {query.isLoading ? (
+          <div className="space-y-3 p-5">
+            <div className="h-12 animate-pulse rounded-xl bg-muted" />
+            <div className="h-12 animate-pulse rounded-xl bg-muted" />
+          </div>
+        ) : !categories.length ? (
+          <div className="p-5">
+            <EmptyState
+              title="لا توجد تصنيفات بعد"
+              hint="ابدأ بإضافة تصنيف رئيسي ثم أضف الموديلات تحته."
+            />
+          </div>
+        ) : (
+          <div className="divide-y divide-border/70">
+            {parents.map((parent) => (
+              <CategoryRow
+                key={parent.id}
+                category={parent}
+                depth={0}
+                children={categories.filter((c) => c.parent_id === parent.id)}
+                onDelete={remove}
+              />
+            ))}
+          </div>
+        )}
+      </section>
+    </div>
+  );
 }
-function CategoryRow({ category, children, depth, onDelete }: { category: Category; children: Category[]; depth: number; onDelete: (c: Category) => Promise<void> }) { const products = category.product_categories?.length ?? 0; return <><div className="group flex min-h-16 items-center gap-3 px-4 py-3 transition hover:bg-muted/45" style={{ paddingRight: `${16 + depth * 30}px` }}><div className={`grid h-9 w-9 shrink-0 place-items-center rounded-xl ${depth ? "bg-muted text-muted-foreground" : "bg-primary/10 text-primary"}`}><FolderTree className="h-4 w-4"/></div><div className="min-w-0 flex-1"><p className="truncate text-sm font-black">{category.name}</p><p dir="ltr" className="truncate text-[11px] text-muted-foreground">/{category.slug}</p></div><span className="hidden rounded-full bg-muted px-2.5 py-1 text-xs font-bold text-muted-foreground sm:inline">{products} منتجات</span><div className="flex items-center gap-1"><Button variant="ghost" size="icon" asChild><Link to="/admin/categories/$id" params={{ id: category.id }} aria-label={`تعديل ${category.name}`}><Edit3 /></Link></Button><AlertDialog><AlertDialogTrigger asChild><Button variant="ghost" size="icon" className="text-muted-foreground hover:bg-destructive/10 hover:text-destructive" aria-label={`حذف ${category.name}`}><Trash2 /></Button></AlertDialogTrigger><AlertDialogContent dir="rtl"><AlertDialogHeader><AlertDialogTitle>حذف التصنيف «{category.name}»؟</AlertDialogTitle><AlertDialogDescription>سيتم حذف روابط المنتجات بهذا التصنيف. التصنيفات الفرعية ستصبح تصنيفات رئيسية. هذا الإجراء لا يمكن التراجع عنه.</AlertDialogDescription></AlertDialogHeader><AlertDialogFooter><AlertDialogCancel>إلغاء</AlertDialogCancel><AlertDialogAction onClick={() => onDelete(category)} className="bg-destructive text-destructive-foreground hover:bg-destructive/90">حذف التصنيف</AlertDialogAction></AlertDialogFooter></AlertDialogContent></AlertDialog></div></div>{children.map(child => <CategoryRow key={child.id} category={child} depth={depth + 1} children={[]} onDelete={onDelete} />)}</>;
+function CategoryRow({
+  category,
+  children,
+  depth,
+  onDelete,
+}: {
+  category: Category;
+  children: Category[];
+  depth: number;
+  onDelete: (c: Category) => Promise<void>;
+}) {
+  const products = category.product_categories?.length ?? 0;
+  return (
+    <>
+      <div
+        className="group flex min-h-16 items-center gap-3 px-4 py-3 transition hover:bg-muted/45"
+        style={{ paddingRight: `${16 + depth * 30}px` }}
+      >
+        <div
+          className={`grid h-9 w-9 shrink-0 place-items-center rounded-xl ${depth ? "bg-muted text-muted-foreground" : "bg-primary/10 text-primary"}`}
+        >
+          <FolderTree className="h-4 w-4" />
+        </div>
+        <div className="min-w-0 flex-1">
+          <p className="truncate text-sm font-black">{category.name}</p>
+          <p dir="ltr" className="truncate text-[11px] text-muted-foreground">
+            /{category.slug}
+          </p>
+        </div>
+        <span className="hidden rounded-full bg-muted px-2.5 py-1 text-xs font-bold text-muted-foreground sm:inline">
+          {products} منتجات
+        </span>
+        <div className="flex items-center gap-1">
+          <Button variant="ghost" size="icon" asChild>
+            <Link
+              to="/admin/categories/$id"
+              params={{ id: category.id }}
+              aria-label={`تعديل ${category.name}`}
+            >
+              <Edit3 />
+            </Link>
+          </Button>
+          <AlertDialog>
+            <AlertDialogTrigger asChild>
+              <Button
+                variant="ghost"
+                size="icon"
+                className="text-muted-foreground hover:bg-destructive/10 hover:text-destructive"
+                aria-label={`حذف ${category.name}`}
+              >
+                <Trash2 />
+              </Button>
+            </AlertDialogTrigger>
+            <AlertDialogContent dir="rtl">
+              <AlertDialogHeader>
+                <AlertDialogTitle>حذف التصنيف «{category.name}»؟</AlertDialogTitle>
+                <AlertDialogDescription>
+                  سيتم حذف روابط المنتجات بهذا التصنيف. التصنيفات الفرعية ستصبح تصنيفات رئيسية.
+                  هذا الإجراء لا يمكن التراجع عنه.
+                </AlertDialogDescription>
+              </AlertDialogHeader>
+              <AlertDialogFooter>
+                <AlertDialogCancel>إلغاء</AlertDialogCancel>
+                <AlertDialogAction
+                  onClick={() => onDelete(category)}
+                  className="bg-destructive text-destructive-foreground hover:bg-destructive/90"
+                >
+                  حذف التصنيف
+                </AlertDialogAction>
+              </AlertDialogFooter>
+            </AlertDialogContent>
+          </AlertDialog>
+        </div>
+      </div>
+      {children.map((child) => (
+        <CategoryRow
+          key={child.id}
+          category={child}
+          depth={depth + 1}
+          children={[]}
+          onDelete={onDelete}
+        />
+      ))}
+    </>
+  );
 }
