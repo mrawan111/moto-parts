@@ -34,10 +34,12 @@ export function Header() {
     <header className="sticky top-0 z-40 border-b border-border bg-background/95 backdrop-blur">
       <div className="h-1 w-full bg-sign-gradient" />
       <div className="mx-auto flex max-w-6xl items-center gap-3 px-4 py-3">
+        {/* Logo */}
         <Link to="/" className="shrink-0">
           <Logo />
         </Link>
 
+        {/* Desktop search */}
         <form onSubmit={submitSearch} className="relative hidden flex-1 md:block">
           <Search className="pointer-events-none absolute end-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
           <input
@@ -49,12 +51,29 @@ export function Header() {
           />
         </form>
 
+        {/* Desktop nav */}
         <nav className="hidden items-center gap-1 text-sm font-bold md:flex">
-          <Link to="/" className="rounded-lg px-3 py-2 transition-colors hover:bg-muted">
+          <Link
+            to="/"
+            className="rounded-lg px-3 py-2 transition-colors hover:bg-muted"
+            activeProps={{ className: "text-primary" }}
+            activeOptions={{ exact: true }}
+          >
             الرئيسية
           </Link>
-          <Link to="/products" className="rounded-lg px-3 py-2 transition-colors hover:bg-muted">
+          <Link
+            to="/products"
+            className="rounded-lg px-3 py-2 transition-colors hover:bg-muted"
+            activeProps={{ className: "text-primary" }}
+          >
             كل المنتجات
+          </Link>
+          <Link
+            to="/contact"
+            className="rounded-lg px-3 py-2 transition-colors hover:bg-muted"
+            activeProps={{ className: "text-primary" }}
+          >
+            اتصل بنا
           </Link>
           <a
             href={`https://wa.me/${settings.whatsapp_number}`}
@@ -67,16 +86,18 @@ export function Header() {
           </a>
         </nav>
 
+        {/* Mobile menu toggle */}
         <button
           type="button"
           onClick={() => setOpenMenu((v) => !v)}
-          aria-label="القائمة"
+          aria-label={openMenu ? "إغلاق القائمة" : "القائمة"}
           className="ms-auto grid h-10 w-10 place-items-center rounded-lg border border-input md:hidden"
         >
           {openMenu ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
         </button>
       </div>
 
+      {/* Mobile drawer */}
       {openMenu && (
         <div className="border-t border-border bg-card px-4 py-4 md:hidden">
           <form onSubmit={submitSearch} className="relative">
@@ -90,15 +111,30 @@ export function Header() {
             />
           </form>
           <div className="mt-4 grid gap-1 text-sm font-bold">
-            <Link to="/" onClick={() => setOpenMenu(false)} className="rounded-lg px-3 py-3 hover:bg-muted">
+            <Link
+              to="/"
+              onClick={() => setOpenMenu(false)}
+              className="rounded-lg px-3 py-3 hover:bg-muted"
+              activeProps={{ className: "text-primary bg-muted" }}
+              activeOptions={{ exact: true }}
+            >
               الرئيسية
             </Link>
             <Link
               to="/products"
               onClick={() => setOpenMenu(false)}
               className="rounded-lg px-3 py-3 hover:bg-muted"
+              activeProps={{ className: "text-primary bg-muted" }}
             >
               كل المنتجات
+            </Link>
+            <Link
+              to="/contact"
+              onClick={() => setOpenMenu(false)}
+              className="rounded-lg px-3 py-3 hover:bg-muted"
+              activeProps={{ className: "text-primary bg-muted" }}
+            >
+              اتصل بنا
             </Link>
             {parents.map((c) => (
               <Link

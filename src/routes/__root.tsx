@@ -76,12 +76,12 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
     meta: [
       { charSet: "utf-8" },
       { name: "viewport", content: "width=device-width, initial-scale=1" },
-      { title: "أبو عمر لقطع غيار الموتوسيكلات" },
+      { title: "Adrenaline Moto — قطع غيار موتوسيكلات" },
       {
         name: "description",
-        content: "قطع غيار موتوسيكلات أصلية بأسعار مناسبة، اطلب بسهولة عبر واتساب.",
+        content: "قطع غيار موتوسيكلات أصلية بأسعار مناسبة — Adrenaline Moto.",
       },
-      { property: "og:site_name", content: "أبو عمر لقطع غيار الموتوسيكلات" },
+      { property: "og:site_name", content: "Adrenaline Moto" },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },
     ],

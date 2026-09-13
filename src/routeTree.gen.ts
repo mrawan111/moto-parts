@@ -10,6 +10,7 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as ContactRouteImport } from './routes/contact'
 import { Route as AdminRouteImport } from './routes/admin'
 import { Route as SearchRouteImport } from './routes/search'
 import { Route as AdminIndexRouteImport } from './routes/admin/index'
@@ -29,6 +30,11 @@ import { Route as AdminProductsNewRouteImport } from './routes/admin/products/ne
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ContactRoute = ContactRouteImport.update({
+  id: '/contact',
+  path: '/contact',
   getParentRoute: () => rootRouteImport,
 } as any)
 const AdminRoute = AdminRouteImport.update({
@@ -108,6 +114,7 @@ const AdminProductsNewRoute = AdminProductsNewRouteImport.update({
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/contact': typeof ContactRoute
   '/admin': typeof AdminRouteWithChildren
   '/search': typeof SearchRoute
   '/admin/login': typeof AdminLoginRoute
@@ -125,6 +132,7 @@ export interface FileRoutesByFullPath {
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/contact': typeof ContactRoute
   '/search': typeof SearchRoute
   '/admin': typeof AdminIndexRoute
   '/admin/login': typeof AdminLoginRoute
@@ -142,6 +150,7 @@ export interface FileRoutesByTo {
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/contact': typeof ContactRoute
   '/admin': typeof AdminRouteWithChildren
   '/search': typeof SearchRoute
   '/admin/_layout': typeof AdminLayoutRoute
@@ -162,6 +171,7 @@ export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
     | '/'
+    | '/contact'
     | '/admin'
     | '/search'
     | '/admin/login'
@@ -179,6 +189,7 @@ export interface FileRouteTypes {
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
+    | '/contact'
     | '/search'
     | '/admin'
     | '/admin/login'
@@ -195,6 +206,7 @@ export interface FileRouteTypes {
   id:
     | '__root__'
     | '/'
+    | '/contact'
     | '/admin'
     | '/search'
     | '/admin/_layout'
@@ -214,6 +226,7 @@ export interface FileRouteTypes {
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  ContactRoute: typeof ContactRoute
   AdminRoute: typeof AdminRouteWithChildren
   SearchRoute: typeof SearchRoute
   CategorySlugRoute: typeof CategorySlugRoute
@@ -228,6 +241,13 @@ declare module '@tanstack/react-router' {
       path: '/'
       fullPath: '/'
       preLoaderRoute: typeof IndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/contact': {
+      id: '/contact'
+      path: '/contact'
+      fullPath: '/contact'
+      preLoaderRoute: typeof ContactRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/admin': {
@@ -368,6 +388,7 @@ const AdminRouteWithChildren = AdminRoute._addFileChildren(AdminRouteChildren)
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  ContactRoute: ContactRoute,
   AdminRoute: AdminRouteWithChildren,
   SearchRoute: SearchRoute,
   CategorySlugRoute: CategorySlugRoute,
