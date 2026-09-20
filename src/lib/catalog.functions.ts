@@ -82,7 +82,7 @@ export const listCategories = createServerFn({ method: "GET" }).handler(async ()
 });
 
 export const listProducts = createServerFn({ method: "GET" })
-  .inputValidator((data: unknown) => listSchema.parse(data ?? {}))
+  .validator((data: unknown) => listSchema.parse(data ?? {}))
   .handler(async ({ data }) => {
     const client = publicClient();
     const limit = data.limit ?? 24;
@@ -160,7 +160,7 @@ export const listProducts = createServerFn({ method: "GET" })
   });
 
 export const getProductBySlug = createServerFn({ method: "GET" })
-  .inputValidator((data: unknown) => z.object({ slug: z.string().min(1).max(200) }).parse(data))
+  .validator((data: unknown) => z.object({ slug: z.string().min(1).max(200) }).parse(data))
   .handler(async ({ data }) => {
     const client = publicClient();
     const { data: row, error } = await client
@@ -200,7 +200,7 @@ export const getProductBySlug = createServerFn({ method: "GET" })
   });
 
 export const getCategoryBySlug = createServerFn({ method: "GET" })
-  .inputValidator((data: unknown) => z.object({ slug: z.string().min(1).max(200) }).parse(data))
+  .validator((data: unknown) => z.object({ slug: z.string().min(1).max(200) }).parse(data))
   .handler(async ({ data }) => {
     const client = publicClient();
     const { data: row, error } = await client

@@ -48,7 +48,7 @@ export const getStoreSettings = createServerFn({ method: "GET" }).handler(
 );
 
 export const updateStoreSettings = createServerFn({ method: "POST" })
-  .inputValidator((data: unknown) => {
+  .validator((data: unknown) => {
     // Basic runtime validation
     const d = data as StoreSettings;
     if (!d || typeof d !== "object") throw new Error("Invalid payload");
