@@ -1,6 +1,7 @@
 import { createServerFn } from "@tanstack/react-start";
 import { createClient } from "@supabase/supabase-js";
 import type { Database } from "@/integrations/supabase/types";
+import { requireSupabaseAuth } from "@/integrations/supabase/auth-middleware";
 
 export type StoreSettings = {
   business_name: string;
@@ -48,18 +49,21 @@ export const getStoreSettings = createServerFn({ method: "GET" }).handler(
 );
 
 export const updateStoreSettings = createServerFn({ method: "POST" })
+  .middleware([requireSupabaseAuth])
   .validator((data: unknown) => {
     // Basic runtime validation
     const d = data as StoreSettings;
     if (!d || typeof d !== "object") throw new Error("Invalid payload");
     return d as StoreSettings;
   })
-  .handler(async ({ data }) => {
-    const client = makeClient();
-    const { error } = await client
+  .handler(async ({ data, context }) => {
+    const { data: updatedSettings, error } = await context.supabase
       .from("store_settings")
       .update(data)
-      .eq("id", 1);
+      .eq("id", 1)
+      .select("id")
+      .maybeSingle();
     if (error) throw new Error(error.message);
+    if (!updatedSettings) throw new Error("تعذر حفظ الإعدادات. تأكد من صلاحيات المدير.");
     return { ok: true };
   });
