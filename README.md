@@ -1132,23 +1132,26 @@ Before finishing:
 
 Build the complete working application, not just static UI mockups.
 
-This project was built with [Lovable](https://lovable.dev).
-
-## Build with Lovable
-
-Continue developing this project in the [Lovable editor](https://lovable.dev/projects/e9c739c8-9534-4863-a8fd-368ce6fab035).
-
-- **Ship faster**: describe what you want to build and Lovable handles the code.
-- **Stay in sync**: every change made in Lovable is committed straight to this repository.
-- **Full ownership**: this code is yours. Push to `main` on GitHub and your changes sync back into Lovable, ready for your next prompt.
+This project was originally scaffolded with [Lovable](https://lovable.dev) and has been migrated to an independent standalone application.
 
 ## Development
 
-Prefer working locally? You need Node.js and npm — [install with nvm](https://github.com/nvm-sh/nvm#installing-and-updating).
+Requires Node.js 18+ and npm (or bun).
 
 ```sh
 git clone <this-repository-url>
 cd <repository-name>
-npm i
+npm install
 npm run dev
 ```
+
+### Environment Setup
+
+Copy `.env.example` to `.env` and fill in your Supabase project credentials:
+
+```sh
+cp .env.example .env
+# Then edit .env with your new Supabase project values
+```
+
+See `.env.example` for the full list of required variables.
