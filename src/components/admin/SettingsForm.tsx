@@ -45,7 +45,7 @@ const FIELDS: Field[] = [
     key: "business_name",
     label: "اسم المتجر",
     icon: Store,
-    placeholder: "Adrenaline Moto",
+    placeholder: "on 2 wheels",
     hint: "يظهر في الشعار والعنوان",
   },
   {

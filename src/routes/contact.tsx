@@ -6,11 +6,11 @@ import { useStoreSettings } from "@/hooks/use-store-settings";
 export const Route = createFileRoute("/contact")({
   head: () => ({
     meta: [
-      { title: "اتصل بنا | Adrenaline Moto" },
+      { title: "اتصل بنا | on 2 wheels" },
       {
         name: "description",
         content:
-          "تواصل مع Adrenaline Moto — قطع غيار موتوسيكلات. هاتف، موقع، فيسبوك، تيك توك، إنستغرام.",
+          "تواصل مع on 2 wheels — قطع غيار موتوسيكلات. هاتف، موقع، فيسبوك، تيك توك، إنستغرام.",
       },
     ],
   }),
@@ -114,7 +114,7 @@ function ContactPage() {
       <section className="bg-hero-gradient text-primary-foreground">
         <div className="mx-auto max-w-6xl px-4 py-14 text-center md:py-20">
           <span className="rounded-full bg-accent px-3 py-1 text-xs font-black text-accent-foreground">
-            Adrenaline Moto
+            on 2 wheels
           </span>
           <h1 className="mt-5 text-3xl font-black leading-tight md:text-4xl">
             اتصل بنا

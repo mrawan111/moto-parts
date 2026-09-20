@@ -151,7 +151,7 @@ export function AdminLayout() {
             </button>
             <div>
               <p className="text-[11px] font-bold text-muted-foreground">
-                Adrenaline Moto
+                on 2 wheels
               </p>
               <h1 className="text-sm font-black">{title}</h1>
             </div>

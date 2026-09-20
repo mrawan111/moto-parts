@@ -12,10 +12,10 @@ export type StoreSettings = {
 };
 
 export const defaultStoreSettings: StoreSettings = {
-  business_name: "Adrenaline Moto",
+  business_name: "on 2 wheels",
   whatsapp_number: "201121363214",
   map_url:
-    "https://www.google.com/maps/search/Adrenaline%20moto%20ادرينالين%20موتو/@29.96870231628418,31.100282669067383,17z?hl=en",
+    "https://www.google.com/maps/search/on%202%20wheels/@29.96870231628418,31.100282669067383,17z?hl=en",
   facebook_url:
     "https://www.facebook.com/people/Adrenaline-Moto/61561465321780/",
   tiktok_url:

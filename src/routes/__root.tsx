@@ -76,12 +76,12 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
     meta: [
       { charSet: "utf-8" },
       { name: "viewport", content: "width=device-width, initial-scale=1" },
-      { title: "Adrenaline Moto — قطع غيار موتوسيكلات" },
+      { title: "on 2 wheels — قطع غيار موتوسيكلات" },
       {
         name: "description",
-        content: "قطع غيار موتوسيكلات أصلية بأسعار مناسبة — Adrenaline Moto.",
+        content: "قطع غيار موتوسيكلات أصلية بأسعار مناسبة — on 2 wheels.",
       },
-      { property: "og:site_name", content: "Adrenaline Moto" },
+      { property: "og:site_name", content: "on 2 wheels" },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },
     ],

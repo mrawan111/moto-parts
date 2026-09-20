@@ -124,7 +124,7 @@ export function Footer() {
       </div>
 
       <div className="border-t border-sidebar-border py-4 text-center text-xs opacity-70">
-        جميع الحقوق محفوظة © {new Date().getFullYear()} Adrenaline Moto
+        جميع الحقوق محفوظة © {new Date().getFullYear()} on 2 wheels
       </div>
     </footer>
   );
